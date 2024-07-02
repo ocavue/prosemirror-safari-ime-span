@@ -35,11 +35,10 @@ const spec: PluginSpec<boolean> = {
 }
 
 function createDecorations(state: EditorState): DecorationSet | undefined {
-  const { $from, $to, from } = state.selection
+  const { $from, $to, to } = state.selection
   const composing = key.getState(state)
   if (composing && $from.sameParent($to)) {
-    const deco = Decoration.widget(from, createSpan, {
-      side: -100,
+    const deco = Decoration.widget(to, createSpan, {
       ignoreSelection: true,
       key: 'safari-ime-span',
     })
