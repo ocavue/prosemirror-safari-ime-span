@@ -46,6 +46,10 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.33.8"
+  },
   "devDependencies": {
     "@antfu/ni": "^0.21.12",
     "@ocavue/eslint-config": "^1.7.0",
