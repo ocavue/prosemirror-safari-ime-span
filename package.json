@@ -42,8 +42,6 @@
     "lint": "eslint .",
     "fix": "eslint --fix . && prettier --write .",
     "prepublishOnly": "nr build",
-    "start": "esno src/index.ts",
-    "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -51,16 +49,12 @@
     "prosemirror-view": "^1.33.8"
   },
   "devDependencies": {
-    "@antfu/ni": "^0.21.12",
     "@ocavue/eslint-config": "^1.7.0",
     "@types/node": "^20.14.9",
     "eslint": "^8.57.0",
-    "esno": "^4.7.0",
     "prettier": "^3.3.2",
     "tsup": "^8.1.0",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.1",
-    "vitest": "^1.6.0"
+    "typescript": "^5.5.3"
   },
   "renovate": {
     "extends": [
