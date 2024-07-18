@@ -1,34 +1,27 @@
 import {
   Plugin,
   PluginKey,
-  type PluginSpec,
   type EditorState,
+  type PluginSpec,
 } from 'prosemirror-state'
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view'
 
 import { safari } from './browser'
 
-const key = new PluginKey<boolean>('safari-ime-span')
+const key = new PluginKey('safari-ime-span')
 
-const spec: PluginSpec<boolean> = {
+let isComposing = false
+
+const spec: PluginSpec<undefined> = {
   key,
-  state: {
-    init: () => {
-      return false
-    },
-    apply: (tr, value) => {
-      const composing = tr.getMeta(key) as boolean | undefined
-      return composing ?? value
-    },
-  },
   props: {
     decorations: createDecorations,
     handleDOMEvents: {
-      compositionstart: (view) => {
-        view.dispatch(view.state.tr.setMeta(key, true))
+      compositionstart: () => {
+        isComposing = true
       },
-      compositionend: (view) => {
-        view.dispatch(view.state.tr.setMeta(key, false))
+      compositionend: () => {
+        isComposing = false
       },
     },
   },
@@ -36,8 +29,7 @@ const spec: PluginSpec<boolean> = {
 
 function createDecorations(state: EditorState): DecorationSet | undefined {
   const { $from, $to, to } = state.selection
-  const composing = key.getState(state)
-  if (composing && $from.sameParent($to)) {
+  if (isComposing && $from.sameParent($to)) {
     const deco = Decoration.widget(to, createSpan, {
       ignoreSelection: true,
       key: 'safari-ime-span',
